@@ -88,19 +88,27 @@ public class TournamentBracket : Frame {
             var bracket = new GameObject(App.noName).AddComponent<TournamentBracket>();
             bracket.transform.parent = this.transform;
 
-            string n = prevBracket["name"].ToString();
-            bracket.name = (n != "") ? n : App.noName;
-            if (prevBracket.ContainsKey("prev_brackets"))
+            if (prevBracket["user"] != null)
             {
-                bracket.height = int.Parse(prevBracket["height"].ToString());
+                var user = JsonConvert.DeserializeObject<Dictionary<string, string>>(prevBracket["user"].ToString());
+                bracket.name = user["username"];
+            }
+            else
+            {
+                bracket.name = App.noName;
+            }
+            
+            if (prevBracket.ContainsKey("brackets"))
+            {
+                bracket.height = int.Parse(prevBracket["round_number"].ToString());
                 bracket.numDescendants = int.Parse(prevBracket["num_descendants"].ToString());
             }
             float h = bracket.numDescendants / (float)numDescendants;
             bracket.bounds.Set(0, y, width, h);
             y += h;
-            if (prevBracket.ContainsKey("prev_brackets"))
+            if (prevBracket.ContainsKey("brackets"))
             {
-                bracket.UpdateWithJson(prevBracket["prev_brackets"].ToString());
+                bracket.UpdateWithJson(prevBracket["brackets"].ToString());
             }
         }
     }

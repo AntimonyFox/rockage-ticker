@@ -31,12 +31,13 @@ public class Viewport : Frame {
                 DateTime dt = DateTime.Parse(update["updated_at"]);
 
                 module = module.Substring(0, 1).ToUpper() + module.Substring(1, module.Length - 1);
-                var m = transform.FindChild(module).GetComponent<Frame>();
+                var m = transform.FindChild(module);
                 if (m != null)
                 {
-                    if (m.UpdateTime(dt))
+                    var frame = m.GetComponent<Frame>();
+                    if (frame.UpdateTime(dt))
                     {
-                        StartCoroutine("UpdateModule", m);
+                        StartCoroutine("UpdateModule", frame);
                     }
                 }
             }
@@ -46,6 +47,7 @@ public class Viewport : Frame {
 
     private IEnumerator UpdateModule(Frame module)
     {
+        print(App.baseUrl + module.name.ToLower());
         WWW www = new WWW(App.baseUrl + module.name.ToLower());
         yield return www;
         print(www.text);

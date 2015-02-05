@@ -20,7 +20,7 @@ public class Tournament : Frame {
     protected override void Start()
     {
         base.Start();
-        UpdateWithJson(json);
+        //UpdateWithJson(json);
     }
 
     protected override void Update()
@@ -40,20 +40,30 @@ public class Tournament : Frame {
 
     public override void UpdateWithJson(string json)
     {
-        var dict = JsonConvert.DeserializeObject<Dictionary<string, object>>(json);
+        print("JSON INCOMING! " + json);
+        var list = JsonConvert.DeserializeObject<List<object>>(json);
 
-        var final = JsonConvert.DeserializeObject<Dictionary<string, object>>(dict["final_bracket"].ToString());
+        var dict = JsonConvert.DeserializeObject<Dictionary<string, object>>(list[0].ToString());
+
+        var final = JsonConvert.DeserializeObject<Dictionary<string, object>>(dict["bracket"].ToString());
         content.name = "Deleted";
         Destroy(content.gameObject);
         content = new GameObject(App.noName).AddComponent<TournamentBracket>();
         content.transform.parent = this.transform;
 
-        string name = final["name"].ToString();
-        content.name = (name != "") ? name : App.noName;
-        content.height = int.Parse(final["height"].ToString());
+        if (final["user"] != null)
+        {
+            var user = JsonConvert.DeserializeObject<Dictionary<string, string>>(final["user"].ToString());
+            content.name = user["username"];
+        }
+        else
+        {
+            content.name = App.noName;
+        }
+        content.height = int.Parse(final["round_number"].ToString());
         content.numDescendants = int.Parse(final["num_descendants"].ToString());
         content.bounds.width = 1;
-        
-        content.UpdateWithJson(final["prev_brackets"].ToString());
+
+        content.UpdateWithJson(final["brackets"].ToString());
     }
 }
