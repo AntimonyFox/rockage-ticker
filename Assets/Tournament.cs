@@ -8,7 +8,8 @@ public class Tournament : Frame {
     private float headerHeight = 75;
     private TournamentBracket content;
 	private TournamentNextup nextup;
-	private string tournName = "";
+	private TournamentQuadrants quadrants;
+	private string tournName = "Sign Up at rockage.tk";
 
     protected override void Awake()
     {
@@ -18,6 +19,9 @@ public class Tournament : Frame {
 
 		nextup = new GameObject("Nextup").AddComponent<TournamentNextup>();
 		nextup.transform.parent = this.transform;
+
+		quadrants = new GameObject("Quadrants").AddComponent<TournamentQuadrants>();
+		quadrants.transform.parent = this.transform;
     }
 
     string json = "{'update_time':'now','final_bracket':{'name':'','height':'3','num_descendants':'5','prev_brackets':[{'name':'','height':'2','num_descendants':'5','prev_brackets':[{'name':'','height':'1','num_descendants':'2','prev_brackets':[{'name':'Fox'},{'name':'Yoshi'}]},{'name':'','height':'1','num_descendants':'3','prev_brackets':[{'name':'Victor'},{'name':'Jode'},{'name':'Jake'}]}]}]}}";
@@ -34,6 +38,7 @@ public class Tournament : Frame {
         float headerHeightPerc = headerHeight / rect.height;
         content.bounds.Set(0, headerHeightPerc, 1, 1 - headerHeightPerc);
 		nextup.bounds.Set(0, headerHeightPerc, 1, 1 - headerHeightPerc);
+		quadrants.bounds.Set(0, headerHeightPerc, 1, 1 - headerHeightPerc);
 
 		if (Input.GetKey (KeyCode.F)) {
 			Screen.fullScreen ^= true;
@@ -70,36 +75,44 @@ public class Tournament : Frame {
 		var all = JsonConvert.DeserializeObject<Dictionary<string, object>>(json);
 		print (all);
 
-		content.gameObject.SetActive(false);
+		if (content != null)
+			content.gameObject.SetActive(false);
 		nextup.gameObject.SetActive(false);
+		quadrants.gameObject.SetActive(false);
 		if (all.ContainsKey ("brackets")) {
-
-			content.gameObject.SetActive(true);
 
 			var dict = JsonConvert.DeserializeObject<Dictionary<string, object>>(all["brackets"].ToString ());
 
 			tournName = dict["name"].ToString ();
-			
-			var final = JsonConvert.DeserializeObject<Dictionary<string, object>>(dict["bracket"].ToString());
+
 			content.name = "Deleted";
 			Destroy(content.gameObject);
-			content = new GameObject(App.noName).AddComponent<TournamentBracket>();
-			content.transform.parent = this.transform;
+
+			if (dict["bracket"] != null) {
 			
-			if (final["user"] != null)
-			{
-				var user = JsonConvert.DeserializeObject<Dictionary<string, string>>(final["user"].ToString());
-				content.name = user["username"];
+				var final = JsonConvert.DeserializeObject<Dictionary<string, object>>(dict["bracket"].ToString());
+
+				content = new GameObject(App.noName).AddComponent<TournamentBracket>();
+				content.transform.parent = this.transform;
+
+				content.gameObject.SetActive(true);
+				
+				if (final["user"] != null)
+				{
+					var user = JsonConvert.DeserializeObject<Dictionary<string, string>>(final["user"].ToString());
+					content.name = user["username"];
+				}
+				else
+				{
+					content.name = App.noName;
+				}
+				content.height = int.Parse(final["round_number"].ToString());
+				content.numDescendants = int.Parse(final["num_descendants"].ToString());
+				content.bounds.width = 1;
+				
+				content.UpdateWithJson(final["brackets"].ToString());
+
 			}
-			else
-			{
-				content.name = App.noName;
-			}
-			content.height = int.Parse(final["round_number"].ToString());
-			content.numDescendants = int.Parse(final["num_descendants"].ToString());
-			content.bounds.width = 1;
-			
-			content.UpdateWithJson(final["brackets"].ToString());
 
 		} else if (all.ContainsKey ("nextup")) {
 
@@ -112,6 +125,11 @@ public class Tournament : Frame {
 			nextup.UpdateWithJson(dict["brackets"].ToString ());
 
 		} else {
+
+			print ("LETS GO");
+			quadrants.gameObject.SetActive(true);
+
+			quadrants.UpdateWithJson(all["quadrants"].ToString ());
 
 		}
     }
