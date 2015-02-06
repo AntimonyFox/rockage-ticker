@@ -10,11 +10,20 @@ public class TournamentBracket : Frame {
     public bool isWinner { get; private set; }
 
     GUIStyle style;
+	GUIStyle styleO;
     void Awake()
     {
         style = new GUIStyle();
         style.alignment = TextAnchor.MiddleCenter;
         style.fontStyle = FontStyle.Bold;
+		style.normal.textColor = Color.white;
+		style.fontSize = 50;
+
+		styleO = new GUIStyle();
+		styleO.alignment = TextAnchor.MiddleCenter;
+		styleO.fontStyle = FontStyle.Bold;
+		styleO.normal.textColor = Color.black;
+		styleO.fontSize = 60;
     }
 
     Vector2 boxDim = new Vector2(10,25);
@@ -42,7 +51,8 @@ public class TournamentBracket : Frame {
         r.y = rect.y + rect.height / 2 - 12.5f;
         //GUI.color = new Color(1, 1, 1, 0.2f);
         GUI.DrawTexture(r, color);
-        GUI.Label(r, name, style);
+        GUI.Label(r, name, styleO);
+		GUI.Label(r, name, style);
 
         if (transform.childCount > 0)
         {

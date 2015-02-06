@@ -23,7 +23,7 @@ public class ScheduleStageEvent : Frame {
     }
 
     private Texture solid_active = Resources.Load<Texture>("solid_active");
-    private Texture solid_upcoming = Resources.Load<Texture>("solid_upcoming");
+    private Texture solid_upcoming = Resources.Load<Texture>("solid_black");
     protected override void OnGUI()
     {
         Rect parentRect = transform.parent.GetComponent<Frame>().rect;
@@ -33,13 +33,17 @@ public class ScheduleStageEvent : Frame {
         if (when + duration >= DateTime.Now)
         {
             Rect r = new Rect(0, rect.y - parentRect.y, rect.width, rect.height);
-            Texture color = (status == Status.active) ? solid_active : solid_upcoming;
-            GUI.DrawTexture(r, color);
+			Rect r2 = new Rect(2, rect.y - parentRect.y + 2, rect.width - 4, rect.height - 4);
+            GUI.DrawTexture(r, solid_upcoming);
+			GUI.DrawTexture(r2, solid_active);
             GUIStyle style = new GUIStyle();
             style.alignment = TextAnchor.MiddleCenter;
             style.fontStyle = FontStyle.BoldAndItalic;
             style.normal.textColor = Color.black;
-            GUI.Label(r, name, style);
+//			style.fontSize = rect.height 
+			style.fontSize = 40;
+			style.wordWrap = true;
+            GUI.Label(r2, name, style);
         }
 
         GUI.EndGroup();

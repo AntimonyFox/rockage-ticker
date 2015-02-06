@@ -32,7 +32,7 @@ public class Viewport : Frame {
 
                 module = module.Substring(0, 1).ToUpper() + module.Substring(1, module.Length - 1);
                 var m = transform.FindChild(module);
-                if (m != null)
+                if (m != null && m.gameObject.activeSelf)
                 {
                     var frame = m.GetComponent<Frame>();
                     if (frame.UpdateTime(dt))
