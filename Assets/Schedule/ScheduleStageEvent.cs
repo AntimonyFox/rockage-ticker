@@ -40,8 +40,8 @@ public class ScheduleStageEvent : Frame {
             style.alignment = TextAnchor.MiddleCenter;
             style.fontStyle = FontStyle.BoldAndItalic;
             style.normal.textColor = Color.black;
-//			style.fontSize = rect.height 
-			style.fontSize = 40;
+			style.fontSize = (int)(Screen.height / 30);
+//			style.fontSize = 40;
 			style.wordWrap = true;
             GUI.Label(r2, name, style);
         }

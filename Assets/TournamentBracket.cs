@@ -13,23 +13,27 @@ public class TournamentBracket : Frame {
 	GUIStyle styleO;
     void Awake()
     {
-        style = new GUIStyle();
-        style.alignment = TextAnchor.MiddleCenter;
-        style.fontStyle = FontStyle.Bold;
-		style.normal.textColor = Color.white;
-		style.fontSize = 50;
-
-		styleO = new GUIStyle();
-		styleO.alignment = TextAnchor.MiddleCenter;
-		styleO.fontStyle = FontStyle.Bold;
-		styleO.normal.textColor = Color.black;
-		styleO.fontSize = 60;
+        
     }
 
-    Vector2 boxDim = new Vector2(10,25);
+    Vector2 boxDim = new Vector2(10,15);
     protected override void OnGUI()
     {
         base.OnGUI();
+
+		boxDim.y = (int)((rect.height/2.5f)/(height+1));
+
+		style = new GUIStyle();
+		style.alignment = TextAnchor.MiddleCenter;
+		style.fontStyle = FontStyle.BoldAndItalic;
+		style.normal.textColor = Color.red;
+		style.fontSize = (int)((rect.height/2.5f)/(height+1));
+		
+		styleO = new GUIStyle();
+		styleO.alignment = TextAnchor.MiddleCenter;
+		styleO.fontStyle = FontStyle.Bold;
+		styleO.normal.textColor = Color.white;
+		styleO.fontSize = (int)((rect.height/2.5f)/(height+1));
 
         var parent = transform.parent.GetComponent<TournamentBracket>();
         isWinner = false;
