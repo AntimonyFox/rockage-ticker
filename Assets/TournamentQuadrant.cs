@@ -7,7 +7,7 @@ public class TournamentQuadrant : Frame {
 
 	public string tournName = "";
 	string maxNumEntries = "";
-	string spacesLeft = "";
+	string signUps = "";
 
 	GUIStyle style;
 	GUIStyle styleO;
@@ -54,7 +54,7 @@ public class TournamentQuadrant : Frame {
 				GUI.Label (r, label, styleO);
 				GUI.Label (r, label, style);
 
-			label = "Spaces left: " + spacesLeft;
+			label = "Signed Up: " + signUps;
 			style.normal.textColor = Color.green;
 			r.y += rect.height / 4;
 
@@ -72,7 +72,7 @@ public class TournamentQuadrant : Frame {
 		var dict = JsonConvert.DeserializeObject<Dictionary<string,object>> (json);
 		tournName = dict ["name"].ToString ();
 		maxNumEntries = dict ["max_num_entries"].ToString ();
-		spacesLeft = dict ["spaces_available"].ToString ();
+		signUps = dict ["num_sign_ups"].ToString ();
 		
 	}
 }
