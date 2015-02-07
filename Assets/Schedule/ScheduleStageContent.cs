@@ -27,6 +27,7 @@ public class ScheduleStageContent : Frame
         style.alignment = TextAnchor.MiddleCenter;
         style.normal.textColor = new Color(1, 1, 1, 0.25f);
         style.fontStyle = FontStyle.Bold;
+		style.fontSize = (int)(blockHeight / 2f);
 
         blockFromNow = blockFromNow.AddMinutes(-timePerBlock);
         for (int i = -1; i < blocksPerScreen; i++)

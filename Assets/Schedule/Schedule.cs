@@ -11,7 +11,9 @@ public class Schedule : Frame {
         foreach (var venue in dict)
         {
             print(venue["name"]);
-            GetSubFrame(venue["name"].ToString()).UpdateWithJson(venue["events"].ToString());
+			var s = GetSubFrame(venue["name"].ToString());
+			if (s.gameObject.activeSelf)
+            	s.UpdateWithJson(venue["events"].ToString());
         }
         //GetSubFrame("Stage A").UpdateWithJson(dict["stage_a"].ToString());
         //GetSubFrame("Stage B").UpdateWithJson(dict["stage_b"].ToString());

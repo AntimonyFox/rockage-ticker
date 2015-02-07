@@ -9,7 +9,7 @@ public class Tournament : Frame {
     private TournamentBracket content;
 	private TournamentNextup nextup;
 	private TournamentQuadrants quadrants;
-	private string tournName = "Sign Up at rockage.tk";
+	private string tournName = "SIGN UP @ ROCKAGE.TK";
 
     protected override void Awake()
     {

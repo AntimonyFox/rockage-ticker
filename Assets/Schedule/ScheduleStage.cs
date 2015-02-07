@@ -23,6 +23,7 @@ public class ScheduleStage : Frame {
     protected override void Update()
     {
         base.Update();
+		headerHeight = rect.height / 12;
         float headerHeightPerc = headerHeight / rect.height;
         content.bounds.Set(0, headerHeightPerc, 1, 1 - headerHeightPerc);
 
@@ -61,7 +62,17 @@ public class ScheduleStage : Frame {
     protected override void OnGUI()
     {
         base.OnGUI();
+
+		var style = new GUIStyle ();
+
+		var r = new Rect (rect.x, rect.y, rect.width, headerHeight);
+
+		style.alignment = TextAnchor.MiddleCenter;
+		style.fontStyle = FontStyle.Bold;
+		style.normal.textColor = Color.white;
+		style.fontSize = (int)(r.height / 2f);
+
         GUI.depth = 5;
-        GUI.Box(new Rect(rect.x, rect.y, rect.width, headerHeight), name);
+        GUI.Box(r, name, style);
     }
 }
