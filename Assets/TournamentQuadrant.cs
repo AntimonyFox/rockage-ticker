@@ -2,12 +2,14 @@
 using System.Collections;
 using System.Collections.Generic;
 using Newtonsoft.Json;
+using System;
 
 public class TournamentQuadrant : Frame {
 
 	public string tournName = "";
 	string maxNumEntries = "";
 	string signUps = "";
+	DateTime when;
 
 	GUIStyle style;
 	GUIStyle styleO;
@@ -49,19 +51,22 @@ public class TournamentQuadrant : Frame {
 			style.fontSize = (int)(rect.height / 8f);
 			styleO.fontSize = (int)(rect.height / 8f);
 
-				string label = "Tournament size: " + maxNumEntries;
-				style.normal.textColor = Color.blue;
+			string label = "Signed Up: " + signUps;
+			style.normal.textColor = Color.blue;
 				r.y += rect.height / 4;
 
 				GUI.Label (r, label, styleO);
 				GUI.Label (r, label, style);
 
-			label = "Signed Up: " + signUps;
-			style.normal.textColor = Color.green;
-			r.y += rect.height / 4;
+			if (when >= DateTime.Today) 
+			{
+				label = "@ " + when.ToString("h:mm tt");
+				style.normal.textColor = Color.green;
+				r.y += rect.height / 4;
 
-			GUI.Label (r, label, styleO);
-			GUI.Label (r, label, style);
+				GUI.Label (r, label, styleO);
+				GUI.Label (r, label, style);
+			}
 
 		}
 		
@@ -75,6 +80,9 @@ public class TournamentQuadrant : Frame {
 		tournName = dict ["name"].ToString ();
 		maxNumEntries = dict ["max_num_entries"].ToString ();
 		signUps = dict ["num_sign_ups"].ToString ();
-		
+		if (dict ["when"] != null)
+			when = DateTime.Parse (dict ["when"].ToString ());
+		else
+			when = DateTime.Today.AddDays (-1);
 	}
 }
