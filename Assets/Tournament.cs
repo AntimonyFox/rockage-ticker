@@ -85,8 +85,10 @@ public class Tournament : Frame {
 
 			tournName = dict["name"].ToString ();
 
-			content.name = "Deleted";
-			Destroy(content.gameObject);
+			if (content != null) {
+				content.name = "Deleted";
+				Destroy(content.gameObject);
+			}
 
 			if (dict["bracket"] != null) {
 			
