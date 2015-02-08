@@ -29,12 +29,14 @@ public class TournamentQuadrant : Frame {
 				style.fontStyle = FontStyle.BoldAndItalic;
 				style.normal.textColor = Color.red;
 				style.fontSize = (int)(rect.height / 8f);
+			style.wordWrap = true;
 	
 				styleO = new GUIStyle ();
 				styleO.alignment = TextAnchor.MiddleCenter;
 				styleO.fontStyle = FontStyle.Bold;
 				styleO.normal.textColor = Color.white;
 				styleO.fontSize = (int)(rect.height / 8f);
+			styleO.wordWrap = true;
 	
 				Rect r = new Rect ();
 				r.width = rect.width;
