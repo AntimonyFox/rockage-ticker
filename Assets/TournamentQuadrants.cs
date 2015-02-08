@@ -53,6 +53,8 @@ public class TournamentQuadrants : Frame {
 			var q = quadrants[i];
 			if (list[i] != null)
 				q.UpdateWithJson (list [i].ToString ());
+			else
+				q.UpdateWithJson ("");
 		}
 		
 	}

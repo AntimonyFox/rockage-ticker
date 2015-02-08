@@ -75,14 +75,21 @@ public class TournamentQuadrant : Frame {
 	public override void UpdateWithJson(string json)
 	{
 		print ("GETTING AT JUST ONE" + json);
-		
-		var dict = JsonConvert.DeserializeObject<Dictionary<string,object>> (json);
-		tournName = dict ["name"].ToString ();
-		maxNumEntries = dict ["max_num_entries"].ToString ();
-		signUps = dict ["num_sign_ups"].ToString ();
-		if (dict ["when"] != null)
-			when = DateTime.Parse (dict ["when"].ToString ());
-		else
+
+		if (json != "") {
+				var dict = JsonConvert.DeserializeObject<Dictionary<string,object>> (json);
+				tournName = dict ["name"].ToString ();
+				maxNumEntries = dict ["max_num_entries"].ToString ();
+				signUps = dict ["num_sign_ups"].ToString ();
+				if (dict ["when"] != null)
+						when = DateTime.Parse (dict ["when"].ToString ());
+				else
+						when = DateTime.Today.AddDays (-1);
+		} else {
+			tournName = "";
+			maxNumEntries = "";
+			signUps = "";
 			when = DateTime.Today.AddDays (-1);
+		}
 	}
 }
