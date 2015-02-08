@@ -52,7 +52,7 @@ public class TournamentQuadrant : Frame {
 			styleO.fontSize = (int)(rect.height / 8f);
 
 			string label = "Signed Up: " + signUps;
-			style.normal.textColor = Color.blue;
+			style.normal.textColor = Color.cyan;
 				r.y += rect.height / 4;
 
 				GUI.Label (r, label, styleO);
