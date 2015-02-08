@@ -69,8 +69,10 @@ public class TournamentNextup : Frame {
 		var list = JsonConvert.DeserializeObject<List<Dictionary<string, object>>>(json);
 		foreach (var bracket in list) {
 
-			var user = JsonConvert.DeserializeObject<Dictionary<string, object>>(bracket["user"].ToString ());
-			names.Add (user["username"].ToString ());
+			if (bracket["user"] != null) {
+				var user = JsonConvert.DeserializeObject<Dictionary<string, object>>(bracket["user"].ToString ());
+				names.Add (user["username"].ToString ());
+			}
 
 		}
 

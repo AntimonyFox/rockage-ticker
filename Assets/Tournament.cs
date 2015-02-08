@@ -122,11 +122,16 @@ public class Tournament : Frame {
 
 			var list = JsonConvert.DeserializeObject<List<object>>(all["nextup"].ToString ());
 
-			var dict = JsonConvert.DeserializeObject<Dictionary<string, object>>(list[0].ToString ());
+			tournName = list[0].ToString ();
 
-			nextup.UpdateWithJson(dict["brackets"].ToString ());
+			var bList = JsonConvert.DeserializeObject<List<object>>(list[1].ToString ());
+			var bracket = JsonConvert.DeserializeObject<Dictionary<string, object>>(bList[0].ToString ());
+			print (bracket["brackets"].ToString ());
+			nextup.UpdateWithJson(bracket["brackets"].ToString ());
 
 		} else {
+
+			tournName = "SIGN UP @ ROCKAGE.TK";
 
 			print ("LETS GO");
 			quadrants.gameObject.SetActive(true);
