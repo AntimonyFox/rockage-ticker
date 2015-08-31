@@ -9,7 +9,8 @@ public class App {
     public static readonly Texture colorTournOff = Resources.Load<Texture>("solid_tournoff");
     public static readonly string noName = "";
 
-    public static readonly string baseUrl = "http://192.168.0.14:3000/api/";
-    //public static readonly string baseUrl = "rockage.herokuapp.com/api/";
+//    public static readonly string baseUrl = "http://192.168.0.14:3000/api/";
+//	public static readonly string baseUrl = "http://localhost:3000/api/";
+    public static readonly string baseUrl = "rockage.herokuapp.com/api/";
     public static readonly string checkUrl = baseUrl + "check/";
 }
